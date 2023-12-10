@@ -1,0 +1,35 @@
+import string
+from nltk.tokenize import word_tokenize
+from nltk.probability import FreqDist
+from nltk.corpus import stopwords
+
+def analyze_text(file_path):
+    # Зчитуємо текстовий файл
+    with open(file_path, 'r', encoding='utf-8') as file:
+        text = file.read()
+
+    # Розбиваємо текст на слова
+    words = word_tokenize(text)
+
+    # Видаляємо пунктуацію та перетворюємо слова в нижній регістр
+    words = [word.lower() for word in words if word.isalpha()]
+
+    # Видаляємо стоп-слова (зайві слова, такі як "the", "is", "and" і т. д.)
+    stop_words = set(stopwords.words('english'))  # Використовуйте відповідну мову для вашого тексту
+    words = [word for word in words if word not in stop_words]
+
+    # Підрахунок кількості слів
+    word_count = len(words)
+
+    # Підрахунок частоти вживання слів
+    frequency_distribution = FreqDist(words)
+
+    # Виведення результатів аналізу
+    print(f"Кількість слів: {word_count}")
+    print("Частота вживання слів:")
+    for word, frequency in frequency_distribution.most_common(10):  # Виводимо топ-10 слів
+        print(f"{word}: {frequency}")
+
+if __name__ == "__main__":
+    file_path = "шлях_до_вашого_файлу.txt"  # Замініть на реальний шлях до вашого файлу
+    analyze_text(file_path)

@@ -1,0 +1,28 @@
+import requests
+from bs4 import BeautifulSoup
+
+def scrape_and_save(url, output_file):
+    # Виконуємо HTTP-запит
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        # Створюємо об'єкт BeautifulSoup для парсингу HTML
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        # Ваш код для отримання даних зі сторінки
+        # Наприклад, витягнемо всі заголовки h1
+        headings = soup.find_all('h1')
+
+        # Зберігаємо отримані дані у файл
+        with open(output_file, 'w', encoding='utf-8') as file:
+            for heading in headings:
+                file.write(heading.text + '\n')
+
+        print(f"Дані були збережені у файл {output_file}")
+    else:
+        print(f"Помилка {response.status_code}: Неможливо отримати сторінку")
+
+if __name__ == "__main__":
+    url = "https://example.com"  # Замініть на URL вашої цільової сторінки
+    output_file = "output.txt"   # Замініть на ім'я файлу, куди ви хочете зберегти дані
+    scrape_and_save(url, output_file)

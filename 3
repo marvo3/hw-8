@@ -1,0 +1,19 @@
+import csv
+import json
+
+def convert_csv_to_json(csv_file, json_file):
+    # Зчитуємо дані з CSV-файлу
+    with open(csv_file, 'r', encoding='utf-8') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        data = list(csv_reader)
+
+    # Обробляємо дані (можете вставити власний код обробки)
+
+    # Зберігаємо оброблені дані у JSON-файл
+    with open(json_file, 'w', encoding='utf-8') as json_file:
+        json.dump(data, json_file, ensure_ascii=False, indent=2)
+
+if __name__ == "__main__":
+    csv_file_path = "джерело.csv"      # Шлях до вашого CSV-файлу
+    json_file_path = "результат.json"  # Шлях до файлу, де ви хочете зберегти JSON-дані
+    convert_csv_to_json(csv_file_path, json_file_path)
